@@ -1,16 +1,15 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class TestDictionnaire {
     public static void main(String[] args) {
         TestDictionnaire dic = new TestDictionnaire();
-        System.out.println(dic.trouverMdpClaireMethodeDictionnaire("entrerjjjjjjj"));
+        System.out.println(dic.trouverMdpClaireMethodeDictionnaire("entrer"));
       }
 
       
-      public static String trouverMdpClaireMethodeDictionnaire(String MdpCorrect){
+      public String trouverMdpClaireMethodeDictionnaire(String MdpCorrect){
         String resultat = "" ;
         boolean isPasswordFound = false;
 
