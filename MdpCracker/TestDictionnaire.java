@@ -3,10 +3,10 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class TestDictionnaire {
-    public static void main(String[] args) {
-        TestDictionnaire dic = new TestDictionnaire();
-        System.out.println(dic.trouverMdpClaireMethodeDictionnaire("entrer"));
-      }
+  //  public static void main(String[] args) {
+  //      TestDictionnaire dic = new TestDictionnaire();
+   //     System.out.println(dic.trouverMdpClaireMethodeDictionnaire("entrer"));
+   //   }
 
       
       public String trouverMdpClaireMethodeDictionnaire(String MdpCorrect){
