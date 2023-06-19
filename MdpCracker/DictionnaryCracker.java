@@ -1,8 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 
 
 public class DictionnaryCracker implements PasswordCracker{
@@ -21,12 +19,16 @@ public class DictionnaryCracker implements PasswordCracker{
             Scanner myReader = new Scanner(dictionnaire);
             while (myReader.hasNextLine()) {
               String mot = myReader.nextLine();
-              String motHashe = hasheur(mot, algo);
-              System.out.println("comparaison avec " + motHashe);
+              String motHashe = Hasheur.hasheur(mot, algo);
+              System.out.println("On compare avec " + motHashe);
               if(motHashe.equals(hashDonne)){
                     resultat = mot;
                     isPasswordFound = true;
+                    System.out.println("Le mot de passe est : " +resultat);
+
+              break;
               }
+              
               
             }
             myReader.close();
@@ -70,18 +72,6 @@ public class DictionnaryCracker implements PasswordCracker{
 
         return resultat;
        
-    }
-    public String hasheur(String motAhacher, String algo) throws Exception{
-      String hashe = "";
-        MessageDigest msg = MessageDigest.getInstance(algo);
-        byte[] hash = msg.digest(motAhacher.getBytes(StandardCharsets.UTF_8));
-        // convertir bytes en hexadécimal
-        StringBuilder s = new StringBuilder();
-        for (byte b : hash) {
-            s.append(Integer.toString((b & 0xff) + 0x100, 16).substring(1));
-        }
-        hashe = s.toString();
-      return hashe;
     }
 
     
