@@ -2,6 +2,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 public class Hasheur {
+    public static void main(String[] args) throws Exception {
+        System.out.println(hasheur("joie", "SHA-256")); 
+    }
     public static String hasheur(String motAhacher, String algo) throws Exception{
       String hashe = "";
         MessageDigest msg = MessageDigest.getInstance(algo);
