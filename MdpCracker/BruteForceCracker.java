@@ -3,47 +3,85 @@ public class BruteForceCracker implements PasswordCracker {
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
 
     @Override
-    public String trouverMdpClair(String MdpCorrect) {
-        String resultat = "";
-        boolean isPasswordFound = false;
+    public String trouverMdpClair(String mdpCorrect) {
+       boolean mdpTrouve = false;
+        int passwordLength = 10; // Longueur maximale du mot de passe à deviner
 
-        for (int len = 1; len <= 4; len++) {
-            isPasswordFound = bruteForceHelper("", MdpCorrect, len);
-            if (isPasswordFound) {
-                break;
+        // Génération des caractères possibles (lettres majuscules, lettres minuscules, chiffres)
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+
+        for (int length = 1; length <= passwordLength; length++) {
+            String result = generateUnhashedPasswords("", characters, length, mdpCorrect);
+            if (result != null) {
+                return result;
             }
         }
 
-        if (!isPasswordFound) {
-            System.out.println("Mot de passe non trouvé.");
-        }
-
-        return resultat;
+        return "Mot de passe non trouvé.";
     }
 
     @Override
-    public String trouverMdpHash(String MdpCorrect, String algo) throws Exception {
-        // À implémenter selon les besoins
-        return "";
+    public String trouverMdpHash(String mdpCorrect, String algo) throws Exception {
+        
+         boolean mdpTrouve = false;
+        int passwordLength = 10; // Longueur maximale du mot de passe à deviner
+
+        // Génération des caractères possibles (lettres majuscules, lettres minuscules, chiffres)
+        String characters = "abcdefghijklmnopqrstuvwxyz";
+
+        for (int length = 1; length <= passwordLength; length++) {
+            String result = generateHashedPasswords("", characters, length, mdpCorrect);
+            if (result != null) {
+                return result;
+            }
+        }
+
+        return "Mot de passe non trouvé.";
     }
 
-    private boolean bruteForceHelper(String prefix, String targetPassword, int length) {
+    // Méthode récursive pour générer les mots de passe hachés
+    private static String generateHashedPasswords(String prefix, String characters, int length, String hashedPassword) throws Exception {
         if (length == 0) {
-            if (prefix.equals(targetPassword)) {
-                System.out.println("Mot de passe trouvé : " + prefix);
-                return true;
+            // Vérification si le mot de passe haché correspond au mot de passe fourni
+            String generatedHash = Hasheur.hasheur(prefix,"SHA-256");
+            if (generatedHash.equals(hashedPassword)) {
+                return prefix;
             }
-            return false;
+            return null;
         }
 
-        for (int i = 0; i < CHARACTERS.length(); i++) {
-            char c = CHARACTERS.charAt(i);
-            if (bruteForceHelper(prefix + c, targetPassword, length - 1)) {
-                return true;
+        for (int i = 0; i < characters.length(); i++) {
+            String newPrefix = prefix + characters.charAt(i);
+            String result = generateHashedPasswords(newPrefix, characters, length - 1, hashedPassword);
+            if (result != null) {
+                return result;
             }
         }
 
-        return false;
+        return null;
     }
+ 
+     // Méthode récursive pour générer les mots de passe non hachés
+    private static String generateUnhashedPasswords(String prefix, String characters, int length, String password) {
+        if (length == 0) {
+            System.out.println("Mot de passe généré : " + prefix);
+            // Vérification si le mot de passe généré correspond au mot de passe fourni
+            if (prefix.equals(password)) {
+                return prefix;
+            }
+            return null;
+        }
+
+        for (int i = 0; i < characters.length(); i++) {
+            String newPrefix = prefix + characters.charAt(i);
+            String result = generateUnhashedPasswords(newPrefix, characters, length - 1, password);
+            if (result != null) {
+                return result;
+            }
+        }
+
+        return null;
+    }
+
 }
 

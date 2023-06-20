@@ -4,14 +4,14 @@ public class PasswordCrackerApp {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Bienvenue dans l'application de craquage de mots de passe !");
+        System.out.println("Bienvenue dans notre belle application de craquage de mots de passe !");
         System.out.println("Veuillez choisir la méthode de craquage :");
         System.out.println("1. Brute force");
         System.out.println("2. Dictionnaire");
         int choixMethode = scanner.nextInt();
         scanner.nextLine(); // Consomme le saut de ligne après la saisie de l'entier
 
-        System.out.println("Veuillez choisir le type de craquage :");
+        System.out.println("Veuillez choisir ce que vous voulez cracker :");
         System.out.println("1. Mot de passe");
         System.out.println("2. Hash");
         int choixTypeCraquage = scanner.nextInt();
