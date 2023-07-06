@@ -1,13 +1,18 @@
+/**
+ * Implémentation de l'interface PasswordCracker pour le craquage par force brute.
+ */
 public class BruteForceCracker implements PasswordCracker {
 
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyz";
 
     @Override
     public String trouverMdpClair(String mdpCorrect) {
-       boolean mdpTrouve = false;
-        int passwordLength = 10; // Longueur maximale du mot de passe à deviner
+        // Indique si le mot de passe a été trouvé
+        boolean mdpTrouve = false;
+        // Longueur maximale du mot de passe à deviner
+        int passwordLength = 10;
 
-        // Génération des caractères possibles (lettres majuscules, lettres minuscules, chiffres)
+        // Génération des caractères possibles (lettres minuscules)
         String characters = "abcdefghijklmnopqrstuvwxyz";
 
         for (int length = 1; length <= passwordLength; length++) {
@@ -22,11 +27,12 @@ public class BruteForceCracker implements PasswordCracker {
 
     @Override
     public String trouverMdpHash(String mdpCorrect, String algo) throws Exception {
-        
-         boolean mdpTrouve = false;
-        int passwordLength = 10; // Longueur maximale du mot de passe à deviner
+        // Indique si le mot de passe a été trouvé
+        boolean mdpTrouve = false;
+        // Longueur maximale du mot de passe à deviner
+        int passwordLength = 10;
 
-        // Génération des caractères possibles (lettres majuscules, lettres minuscules, chiffres)
+        // Génération des caractères possibles (lettres minuscules)
         String characters = "abcdefghijklmnopqrstuvwxyz";
 
         for (int length = 1; length <= passwordLength; length++) {
@@ -39,11 +45,20 @@ public class BruteForceCracker implements PasswordCracker {
         return "Mot de passe non trouvé.";
     }
 
-    // Méthode récursive pour générer les mots de passe hachés
+    /**
+     * Méthode récursive pour générer les mots de passe hachés.
+     *
+     * @param prefix     Le préfixe actuel du mot de passe en cours de génération.
+     * @param characters Les caractères possibles pour le mot de passe.
+     * @param length     La longueur restante du mot de passe.
+     * @param hashedPassword Le mot de passe haché à comparer.
+     * @return Le mot de passe trouvé ou null s'il n'a pas été trouvé.
+     * @throws Exception Si une erreur survient lors de l'utilisation de l'algorithme de hachage.
+     */
     private static String generateHashedPasswords(String prefix, String characters, int length, String hashedPassword) throws Exception {
         if (length == 0) {
             // Vérification si le mot de passe haché correspond au mot de passe fourni
-            String generatedHash = Hasheur.hasheur(prefix,"SHA-256");
+            String generatedHash = Hasheur.hasheur(prefix, "SHA-256");
             if (generatedHash.equals(hashedPassword)) {
                 return prefix;
             }
@@ -60,8 +75,16 @@ public class BruteForceCracker implements PasswordCracker {
 
         return null;
     }
- 
-     // Méthode récursive pour générer les mots de passe non hachés
+
+    /**
+     * Méthode récursive pour générer les mots de passe non hachés.
+     *
+     * @param prefix     Le préfixe actuel du mot de passe en cours de génération.
+     * @param characters Les caractères possibles pour le mot de passe.
+     * @param length     La longueur restante du mot de passe.
+     * @param password   Le mot de passe à comparer.
+     * @return Le mot de passe trouvé ou null s'il n'a pas été trouvé.
+     */
     private static String generateUnhashedPasswords(String prefix, String characters, int length, String password) {
         if (length == 0) {
             System.out.println("Mot de passe généré : " + prefix);
@@ -82,6 +105,4 @@ public class BruteForceCracker implements PasswordCracker {
 
         return null;
     }
-
 }
-
